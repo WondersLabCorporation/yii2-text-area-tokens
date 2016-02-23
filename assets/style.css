@@ -4,6 +4,9 @@
 }
 .available-tokens .token {
     display: inline-block;
-    padding-right: 5px;
     cursor: pointer;
+    background-color: #667890;
+    margin: 0 3px;
+    color: #fff;
+    padding: 2px 10px;
 }

@@ -3,6 +3,7 @@ namespace mmedojevicbg\TextAreaTokens;
 
 use yii\helpers\Html;
 use yii\widgets\InputWidget;
+use yii\helpers\ArrayHelper;
 
 class TextAreaTokens extends InputWidget
 {
@@ -16,6 +17,7 @@ class TextAreaTokens extends InputWidget
     public $tokens = [];
     public $tokenStart = '[';
     public $tokenEnd = ']';
+    public $tokenOptions = [];
 
     public function init()
     {
@@ -51,12 +53,13 @@ class TextAreaTokens extends InputWidget
         echo 'Available tokens:';
         echo Html::endTag('div');
         foreach ($this->tokens as $token => $label) {
-            echo Html::beginTag('span', [
-                'class' => 'token',
+            $tokenOptions = ArrayHelper::merge($this->tokenOptions, [
+                'class' => ['token'],
                 'data' => [
                     'token' => $this->tokenStart . $token . $this->tokenEnd
                 ]
             ]);
+            echo Html::beginTag('span', $tokenOptions);
             echo $label;
             echo Html::endTag('span');
         }
