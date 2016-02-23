@@ -9,6 +9,14 @@
     {
       "name": "Marko Medojevic",
       "email": "mmedojevicbg@gmail.com"
+    },
+    {
+      "name": "Ivan Tischenko",
+      "email": "johan@mail.ua"
+    },
+    {
+      "name": "Dmitriy Raschepkin",
+      "email": "dmitriy.raschepkin@gmail.com"
     }
   ],
   "require": {
@@ -16,7 +24,7 @@
   },
   "autoload": {
     "psr-4": {
-      "mmedojevicbg\\TextAreaTokens\\": ""
+      "WondersLabCorporation": ""
     }
   }
 }

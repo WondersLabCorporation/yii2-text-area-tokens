@@ -1,5 +1,6 @@
 <?php
-namespace mmedojevicbg\TextAreaTokens;
+namespace WondersLabCorporation;
+
 use yii\web\AssetBundle;
 
 class TextAreaTokensAsset extends AssetBundle
