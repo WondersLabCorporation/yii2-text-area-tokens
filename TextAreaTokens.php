@@ -36,15 +36,15 @@ class TextAreaTokens extends InputWidget
         $this->renderTokens();
         $this->registerClientScript();
     }
-    private function renderTokens() {
+    public function renderTokens() {
         echo Html::beginTag('div', ['class' => 'available-tokens',
                                      'id' => $this->tokenContainerId]);
         echo Html::beginTag('div');
         echo 'Available tokens:';
         echo Html::endTag('div');
-        foreach($this->tokens as $token) {
-            echo Html::beginTag('span', ['class' => 'token']);
-            echo '[' . $token . ']';
+        foreach($this->tokens as $token => $label) {
+            echo Html::beginTag('span', ['class' => 'token','data'=>['token' => $token]]);
+            echo $label;
             echo Html::endTag('span');
         }
         echo Html::endTag('div');
@@ -55,7 +55,7 @@ class TextAreaTokens extends InputWidget
         TextAreaTokensAsset::register($view);
         $js = <<<EOT
         $('#$this->tokenContainerId .token').click(function(){
-            var token = $(this).html();
+            var token = $(this).data('token');
             insertAtCaret('$this->textAreaId', token);
         });
 EOT;
