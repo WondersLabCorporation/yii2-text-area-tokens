@@ -36,12 +36,13 @@ Usage
 echo TextAreaTokens::widget(['model' => $model,
                              'attribute' => 'textfield1',
                              'tokens' => ['first_name'=>'First Name', 'last_name' => 'Last Name'],
-                             'tokenStart' => '[',
-                             'tokenEnd' => ']',
+                             'tokenStart' => '[[',
+                             'tokenEnd' => ']]',
                              'tokenOptions' => [
                                 'class'=> [
                                      'myclass'
                                 ]
                              ],
+                             'tokenSuffix' => true,
                              'options' => ['rows' => 8, 'cols' => 100]])
 ```

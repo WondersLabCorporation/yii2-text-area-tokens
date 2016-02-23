@@ -18,6 +18,7 @@ class TextAreaTokens extends InputWidget
     public $tokenStart = '[';
     public $tokenEnd = ']';
     public $tokenOptions = [];
+    public $tokenSuffix = true;
 
     public function init()
     {
@@ -61,6 +62,14 @@ class TextAreaTokens extends InputWidget
             ]);
             echo Html::beginTag('span', $tokenOptions);
             echo $label;
+            if ($this->tokenSuffix === true) {
+                echo Html::beginTag('i', ['class' => 'glyphicon glyphicon-plus add-tag']);
+                echo Html::endTag('i');
+            } elseif ($this->tokenSuffix instanceof \Closure) {
+                echo call_user_func($this->tokenSuffix);
+            } elseif (is_string($this->tokenSuffix)) {
+                echo $this->tokenSuffix;
+            }
             echo Html::endTag('span');
         }
         echo Html::endTag('div');
