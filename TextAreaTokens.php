@@ -14,6 +14,9 @@ class TextAreaTokens extends InputWidget
     protected $textAreaId;
     protected $tokenContainerId;
     public $tokens = [];
+    public $tokenStart = '[';
+    public $tokenEnd = ']';
+
     public function init()
     {
         parent::init();
@@ -25,6 +28,7 @@ class TextAreaTokens extends InputWidget
         $this->createTextAreaId();
         $this->createTokenContainerId();
     }
+
     public function run()
     {
         $this->options['id'] = $this->textAreaId;
@@ -36,19 +40,29 @@ class TextAreaTokens extends InputWidget
         $this->renderTokens();
         $this->registerClientScript();
     }
-    public function renderTokens() {
-        echo Html::beginTag('div', ['class' => 'available-tokens',
-                                     'id' => $this->tokenContainerId]);
+
+    public function renderTokens()
+    {
+        echo Html::beginTag('div', [
+            'class' => 'available-tokens',
+            'id' => $this->tokenContainerId
+        ]);
         echo Html::beginTag('div');
         echo 'Available tokens:';
         echo Html::endTag('div');
-        foreach($this->tokens as $token => $label) {
-            echo Html::beginTag('span', ['class' => 'token','data'=>['token' => $token]]);
+        foreach ($this->tokens as $token => $label) {
+            echo Html::beginTag('span', [
+                'class' => 'token',
+                'data' => [
+                    'token' => $this->tokenStart . $token . $this->tokenEnd
+                ]
+            ]);
             echo $label;
             echo Html::endTag('span');
         }
         echo Html::endTag('div');
     }
+
     protected function registerClientScript()
     {
         $view = $this->getView();
@@ -61,10 +75,14 @@ class TextAreaTokens extends InputWidget
 EOT;
         $view->registerJs($js);
     }
-    private function createTextAreaId() {
+
+    private function createTextAreaId()
+    {
         return $this->textAreaId = 'text-area-tokens-' . $this->fieldName;
     }
-    private function createTokenContainerId() {
+
+    private function createTokenContainerId()
+    {
         return $this->tokenContainerId = 'available-tokens-' . $this->fieldName;
     }
 }
