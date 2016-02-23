@@ -21,7 +21,7 @@ Add to your `composer.json` file
 and run
 
 ```
-composer require WondersLabCorporation/yii2-text-area-tokens:dev-master
+composer require WondersLabCorporation/yii2-text-area-tokens:"dev-master"
 ```
 
 
