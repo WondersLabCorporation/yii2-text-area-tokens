@@ -15,7 +15,7 @@ class TextAreaTokens extends InputWidget
     /**
      * @var TextAreaTokensAsset
      */
-    public $asset = 'TextAreaTokensAsset';
+    public $asset = '\WondersLabCorporation\TextAreaTokensAsset';
     /**
      * @var string field name whether model attribute or custom name
      */
@@ -43,9 +43,15 @@ class TextAreaTokens extends InputWidget
      */
     public $containerOptions = [];
     /**
+     * @var array the HTML attributes for the tokens container tag.
+     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     */
+    public $tokenContainerOptions = [];
+    /**
      * true to render default suffix with plus icon,
      * string to render as it is,
      * Closure to generate suffix based on token
+     *      function ($token) { return "--$token--"; }
      * @var bool|string|\Closure
      */
     public $tokenSuffix = true;
@@ -76,16 +82,19 @@ class TextAreaTokens extends InputWidget
      */
     public function run()
     {
-        $containerOptions = ArrayHelper::merge($this->containerOptions, [
-            'class' => 'available-tokens',
-        ]);
+        $containerOptions = ArrayHelper::merge(
+            [
+                'class' => 'tokens-widget',
+            ],
+            $this->containerOptions
+        );
         echo  Html::beginTag('div', $containerOptions);
-            if ($this->hasModel()) {
-                echo Html::activeTextarea($this->model, $this->attribute, $this->options);
-            } else {
-                echo Html::textarea($this->name, $this->value, $this->options);
-            }
-            echo $this->renderTokens();
+        if ($this->hasModel()) {
+            echo Html::activeTextarea($this->model, $this->attribute, $this->options);
+        } else {
+            echo Html::textarea($this->name, $this->value, $this->options);
+        }
+        echo $this->renderTokens();
         echo Html::endTag('div');
         $this->registerClientScript();
     }
@@ -96,17 +105,28 @@ class TextAreaTokens extends InputWidget
     public function renderTokens()
     {
         $result = '';
+        $tokenContainerOptions = ArrayHelper::merge(
+            [
+                'class' => 'tokens-container',
+            ],
+            $this->tokenContainerOptions
+        );
+        $result .= Html::beginTag('div', $tokenContainerOptions);
         if ($this->tokensTitle) {
             $result .= Html::beginTag('div');
             $result .= $this->tokensTitle;
             $result .= Html::endTag('div');
         }
-        $this->tokenOptions = ArrayHelper::merge($this->containerOptions, [
-            'class' => 'token',
-        ]);
+        $this->tokenOptions = ArrayHelper::merge(
+            [
+                'class' => 'token',
+            ],
+            $this->tokenOptions
+        );
         foreach ($this->tokens as $token => $label) {
             $result .= $this->renderToken($token, $label);
         }
+        $result .= Html::endTag('div');
         return $result;
     }
 
@@ -141,6 +161,7 @@ class TextAreaTokens extends InputWidget
     {
         $result = '';
         if ($this->tokenSuffix === true) {
+            $result .= ' ';
             $result .= Html::beginTag('i', ['class' => 'glyphicon glyphicon-plus add-tag']);
             $result .= Html::endTag('i');
         } elseif ($this->tokenSuffix instanceof \Closure) {

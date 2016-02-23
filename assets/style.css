@@ -1,8 +1,8 @@
-.available-tokens {
+.tokens-container {
     color: #696969;
     font-size: 11px;
 }
-.available-tokens .token {
+.tokens-container .token {
     display: inline-block;
     cursor: pointer;
     background-color: #667890;
